@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Home</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+	<header>
+		<div class="container text-center">
+			<h2>Text Classification</h2>
+		</div>
+	</header>
+
+	<div class="row">
+		<div class="col-sm-6">
+			Input: <input type="text" id="form_input"></input>
+		</div>
+		<div class="col-sm-6" id="place_for_interpretation"></div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+	// Source: https://stackoverflow.com/questions/1909441/how-to-delay-the-keyup-handler-until-the-user-stops-typing
+	function delay(callback, ms) {
+		var timer = 0;
+		return function() {
+			var context = this, args = arguments;
+			clearTimeout(timer);
+			timer = setTimeout(function () {
+				callback.apply(context, args);
+			}, ms || 0);
+		};
+	}
+	// Source: https://stackoverflow.com/questions/40963401/flask-dynamic-data-update-without-reload-page
+	$("#form_input").keyup(delay(function(){
+			var text = $(this).val();
+			$.ajax({
+				url: "/interpret",
+				type: "get",
+				data: {jsdata: text},
+				success: function(response) {
+					$("#place_for_interpretation").html(response);
+				},
+				error: function(xhr) {
+					//Do Something to handle error
+				}
+			});
+	}, 500));
+	</script>
+
+</body>
+</html>
