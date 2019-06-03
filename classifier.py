@@ -13,9 +13,11 @@ class Classifier(object):
     Outputs predictions for sentiment analysis
     """
 
-    def __init__(self, tarfname='data/sentiment.tar.gz'):
-        sentiment = self.read_files(tarfname)
-        full_data = sentiment.train_data + sentiment.dev_data
+    def __init__(self, tarfname='data/sentiment.tar.gz'): #modify
+        # sentiment = self.read_files(tarfname)
+        sentiment = self.read_files_input(tarfname)
+        #full_data = sentiment.train_data + sentiment.dev_data ##output does not have dev data
+        full_data = sentiment.train_data
         y_train = sentiment.trainy
         y_dev = sentiment.devy
         y_full = np.concatenate((y_train, y_dev))
@@ -32,6 +34,40 @@ class Classifier(object):
         clf = LogisticRegression(random_state=0, solver='lbfgs', max_iter=10000)
         clf.fit(X_train, y_train)
         return vect, clf
+
+    def read_files_input(self, filename, verbose=False):
+        '''
+        Input: A training test file
+        '''
+
+
+        class Data: pass
+        sentiment = Data()
+        tweet_train_label = []
+        tweet_train_data = []
+        tweet_dev_label = []
+        tweet_dev_data = []
+
+
+        with open(filename, encoding='utf8', errors='ignore') as f:
+            next(f)
+            for line in f:
+                values = line.split()
+                index, label, tweet = values[0], values[1], ' '.join(values[2:])
+                tweet_train_label.append(label)
+                tweet_train_data.append(tweet)
+
+        sentiment.train_labels = tweet_train_label
+        sentiment.train_data = tweet_train_data
+        sentiment.dev_labels = tweet_dev_label
+        sentiment.dev_data = tweet_dev_data
+
+        sentiment.le = preprocessing.LabelEncoder()
+        sentiment.le.fit(sentiment.train_labels)
+        sentiment.target_labels = sentiment.le.classes_
+        sentiment.trainy = sentiment.le.transform(sentiment.train_labels)
+        sentiment.devy = sentiment.le.transform(sentiment.dev_labels)
+        return sentiment
 
     def read_files(self, tarfname, verbose=False):
         """Read the training and development data from the sentiment tar file.
@@ -103,7 +139,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     review_data = " ".join(sys.argv[1:])
-    tarfname = "data/sentiment.tar.gz"
+    tarfname = "data/SemEval2018-T3-train-taskA.txt"
     clf = Classifier(tarfname)
     y_pred = clf.predict_sentiment(review_data)
     print(y_pred)
