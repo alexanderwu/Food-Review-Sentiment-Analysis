@@ -4,27 +4,54 @@
 	<title>Home</title>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-
 	<header>
-		<div class="container text-center">
-			<h2>Text Classification</h2>
-		</div>
+		<h1>Text Classification</h2>
 	</header>
 
-	<div class="row">
-		<div class="col-sm-6">
-			Input: <input type="text" id="form_input"></input>
+	<div class="model-nav">
+		<ul>
+			<li class="active">Sentiment Analysis</li>
+			<li>Sarcasm Detection</li>
+		</ul>
+	</div>
+
+	<div class="wrapper">
+		<div class="input">
+			<textarea id="text_input" placeholder="Interpret text" autofocus></textarea>
 		</div>
-		<div class="col-sm-6" id="place_for_interpretation"></div>
+		<div class="interpret">
+			<div class="interpret_title">Interpretation</div>
+			<div id="place_for_interpretation"></div>
+		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script>
+	function interpret_text(text) {
+		$.ajax({
+			url: "/interpret",
+			type: "get",
+			data: {jsdata: text},
+			success: function(response) {
+				$("#place_for_interpretation").html(response);
+			},
+			error: function(xhr) {
+				//Do Something to handle error
+			}
+		});
+	}
+
+	// Load model
+	$('.model-nav li').on('click', function(){
+		$('li.active').removeClass('active'); // to remove the current active tab
+		$(this).addClass('active'); // add active class to the clicked tab
+		var text = $("#text_input").val();
+		interpret_text(text);
+	});
+
 	// Source: https://stackoverflow.com/questions/1909441/how-to-delay-the-keyup-handler-until-the-user-stops-typing
 	function delay(callback, ms) {
 		var timer = 0;
@@ -36,20 +63,11 @@
 			}, ms || 0);
 		};
 	}
+
 	// Source: https://stackoverflow.com/questions/40963401/flask-dynamic-data-update-without-reload-page
-	$("#form_input").keyup(delay(function(){
+	$("#text_input").keyup(delay(function(){
 			var text = $(this).val();
-			$.ajax({
-				url: "/interpret",
-				type: "get",
-				data: {jsdata: text},
-				success: function(response) {
-					$("#place_for_interpretation").html(response);
-				},
-				error: function(xhr) {
-					//Do Something to handle error
-				}
-			});
+			interpret_text(text);
 	}, 500));
 	</script>
 
