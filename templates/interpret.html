@@ -1,4 +1,32 @@
 <div class="interpret">
+	<div>{{ interpretation['pred'] }}</div>
 	<div>{{ interpretation['text'] }}</div>
-	<div>{{ interpretation['wt_text'] }}</div>
+	<p>
+	{% for token, score, sentiment in interpretation['compact_interpret'] %}
+		{% if sentiment == "neutral" %}
+		<div class="tooltip">
+			<span class="neutral">{{ token }}</span>
+		</div>
+		{% else %}
+		<div class="tooltip">
+			<span class="{{ sentiment }}">{{ token }}</span>
+			<span class="tooltiptext">{{ score }}</span>
+		</div>
+		{% endif %}
+	{% endfor %}
+
+	</br>
+	{% for token, score, sentiment in interpretation['expanded_interpret'] %}
+		{% if sentiment == "neutral" %}
+		<div class="tooltip">
+			<span class="neutral">{{ token }}</span>
+		</div>
+		{% else %}
+		<div class="tooltip">
+			<span class="{{ sentiment }}">{{ token }}</span>
+			<span class="tooltiptext">{{ score }}</span>
+		</div>
+		{% endif %}
+	{% endfor %}
+	</p>
 </div>

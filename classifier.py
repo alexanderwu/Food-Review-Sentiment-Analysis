@@ -7,26 +7,26 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 import numpy as np
 
-
 class Classifier(object):
     """
-    Outputs predictions for sentiment analysis
+    Outputs predictions for text classification
     """
-
-    def __init__(self, tarfname='data/sentiment.tar.gz'): #modify
-        # sentiment = self.read_files(tarfname)
-        sentiment = self.read_files_input(tarfname)
-        #full_data = sentiment.train_data + sentiment.dev_data ##output does not have dev data
-        full_data = sentiment.train_data
-        y_train = sentiment.trainy
-        y_dev = sentiment.devy
-        y_full = np.concatenate((y_train, y_dev))
-        self.vect, self.clf = self.supervised_classifier(full_data, y_full)
-
     def predict_sentiment(self, review_data=""):
         X_test = self.vect.transform([review_data])
         y_pred = self.clf.predict_proba(X_test)[:,1]
         return y_pred
+
+class SentimentClassifier(Classifier):
+    """
+    Outputs predictions for sentiment analysis
+    """
+    def __init__(self, tarfname='data/sentiment.tar.gz'):
+        sentiment = self.read_files(tarfname)
+        full_data = sentiment.train_data + sentiment.dev_data
+        y_train = sentiment.trainy
+        y_dev = sentiment.devy
+        y_full = np.concatenate((y_train, y_dev))
+        self.vect, self.clf = self.supervised_classifier(full_data, y_full)
 
     def supervised_classifier(self, train_data, y_train):
         vect = CountVectorizer(ngram_range=(1,2), tokenizer=word_tokenize, max_df=1.0, min_df=3)
@@ -40,14 +40,12 @@ class Classifier(object):
         Input: A training test file
         '''
 
-
         class Data: pass
         sentiment = Data()
         tweet_train_label = []
         tweet_train_data = []
         tweet_dev_label = []
         tweet_dev_data = []
-
 
         with open(filename, encoding='utf8', errors='ignore') as f:
             next(f)
@@ -91,7 +89,7 @@ class Classifier(object):
             labels = []
             for line in tf:
                 line = line.decode("utf-8")
-                (label,text) = line.strip().split("\t")
+                (label, text) = line.strip().split("\t")
                 labels.append(label)
                 data.append(text)
             return data, labels
@@ -124,6 +122,59 @@ class Classifier(object):
         sentiment.trainy = sentiment.le.transform(sentiment.train_labels)
         sentiment.devy = sentiment.le.transform(sentiment.dev_labels)
         tar.close()
+        return sentiment
+
+
+class SarcasmClassifier(Classifier):
+    """
+    Outputs predictions for sarcasm detection
+    """
+    def __init__(self, fname="data/SemEval2018-T3-train-taskA.txt"):
+        # sentiment = self.read_files(fname)
+        sentiment = self.read_files_input(fname)
+        #full_data = sentiment.train_data + sentiment.dev_data ##output does not have dev data
+        full_data = sentiment.train_data
+        y_train = sentiment.trainy
+        y_dev = sentiment.devy
+        y_full = np.concatenate((y_train, y_dev))
+        self.vect, self.clf = self.supervised_classifier(full_data, y_full)
+
+    def supervised_classifier(self, train_data, y_train):
+        vect = CountVectorizer(ngram_range=(1,2), tokenizer=word_tokenize, max_df=1.0, min_df=2) #, stop_words="English")
+        X_train = vect.fit_transform(train_data)
+        clf = LogisticRegression(random_state=0, solver='lbfgs', max_iter=10000)
+        clf.fit(X_train, y_train)
+        return vect, clf
+
+    def read_files_input(self, filename, verbose=False):
+        '''
+        Input: A training test file
+        '''
+        class Data: pass
+        sentiment = Data()
+        tweet_train_label = []
+        tweet_train_data = []
+        tweet_dev_label = []
+        tweet_dev_data = []
+
+        with open(filename, encoding='utf8', errors='ignore') as f:
+            next(f)
+            for line in f:
+                values = line.split()
+                index, label, tweet = values[0], values[1], ' '.join(values[2:])
+                tweet_train_label.append(label)
+                tweet_train_data.append(tweet)
+
+        sentiment.train_labels = tweet_train_label
+        sentiment.train_data = tweet_train_data
+        sentiment.dev_labels = tweet_dev_label
+        sentiment.dev_data = tweet_dev_data
+
+        sentiment.le = preprocessing.LabelEncoder()
+        sentiment.le.fit(sentiment.train_labels)
+        sentiment.target_labels = sentiment.le.classes_
+        sentiment.trainy = sentiment.le.transform(sentiment.train_labels)
+        sentiment.devy = sentiment.le.transform(sentiment.dev_labels)
         return sentiment
 
 def usage():
