@@ -13,8 +13,8 @@
 
 	<div class="model-nav">
 		<ul>
-			<li class="active">Sentiment Analysis</li>
-			<li>Sarcasm Detection</li>
+			<li name="sentiment" class="active">Sentiment Analysis</li>
+			<li name="sarcasm">Sarcasm Detection</li>
 		</ul>
 	</div>
 
@@ -30,11 +30,11 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script>
-	function interpret_text(text) {
+	function interpret_text(model, text) {
 		$.ajax({
 			url: "/interpret",
-			type: "get",
-			data: {jsdata: text},
+			type: "GET",
+			data: {model: model, text: text},
 			success: function(response) {
 				$("#place_for_interpretation").html(response);
 			},
@@ -49,7 +49,8 @@
 		$('li.active').removeClass('active'); // to remove the current active tab
 		$(this).addClass('active'); // add active class to the clicked tab
 		var text = $("#text_input").val();
-		interpret_text(text);
+		var model = $(".model-nav li.active").attr("name");
+		interpret_text(model, text);
 	});
 
 	// Source: https://stackoverflow.com/questions/1909441/how-to-delay-the-keyup-handler-until-the-user-stops-typing
@@ -67,7 +68,8 @@
 	// Source: https://stackoverflow.com/questions/40963401/flask-dynamic-data-update-without-reload-page
 	$("#text_input").keyup(delay(function(){
 			var text = $(this).val();
-			interpret_text(text);
+			var model = $(".model-nav li.active").attr("name");
+			interpret_text(model, text);
 	}, 500));
 	</script>
 

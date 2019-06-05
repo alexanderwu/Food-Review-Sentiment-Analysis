@@ -15,11 +15,14 @@ def index():
 
 @app.route('/interpret')
 def interpret():
-    text = request.args.get('jsdata')
-    if True:
-        interpretation = Interpretation(sentiment_clf, text)
+    model = request.args.get('model')
+    text = request.args.get('text')
+    if model == "sentiment":
+        interpretation = Interpretation(sentiment_clf, model, text)
+    elif model == "sarcasm":
+        interpretation = Interpretation(sarcasm_clf, model, text)
     else:
-        interpretation = Interpretation(sarcasm_clf, text)
+        print("ERROR: {} model not recognized".format(model))
     return render_template('interpret.html', interpretation=interpretation)
 
 if __name__ == '__main__':
