@@ -25,9 +25,9 @@ class Interpretation(object):
 
     def classify_token(self, token):
         # if token not in self.vocab_dict:
-        if self.vocab_dict[token] == 0:
+        if self.vocab_dict[token.lower()] == 0:
             return 'neutral'
-        elif self.vocab_dict[token] > 0:
+        elif self.vocab_dict[token.lower()] > 0:
             return 'positive'
         else:
             return 'negative'
@@ -41,8 +41,10 @@ class Interpretation(object):
     def interpret_compact(self, text):
         def adjusted_score(left_token, token, right_token):
             return self.score(left_token)/2 + self.score(token) + self.score(right_token)/2
+        lower_tokenized_text = [x.lower() for x in self.tokenized_text]
+        lower_valid_text = list(valid_ngrams(lower_tokenized_text))
         valid_text = list(valid_ngrams(self.tokenized_text))
-        v_text = [" "] + valid_text
+        v_text = [" "] + lower_valid_text
         compact_tokens = [t for i, t in enumerate(valid_text) if i % 2 == 0]
         compact_scores = [adjusted_score(v_text[i-1], v_text[i], v_text[i+1])
                           for i in range(len(v_text))

@@ -29,7 +29,7 @@ class SentimentClassifier(Classifier):
         self.vect, self.clf = self.supervised_classifier(full_data, y_full)
 
     def supervised_classifier(self, train_data, y_train):
-        vect = CountVectorizer(ngram_range=(1,2), tokenizer=word_tokenize, max_df=1.0, min_df=3)
+        vect = CountVectorizer(ngram_range=(1,2), tokenizer=word_tokenize, min_df=3)
         X_train = vect.fit_transform(train_data)
         clf = LogisticRegression(random_state=0, solver='lbfgs', max_iter=10000)
         clf.fit(X_train, y_train)
