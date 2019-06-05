@@ -44,20 +44,23 @@ textarea {
 	/*background-color: lightgrey;*/
 }
 
-.interpret {
+.module {
 	border: 1px solid lightgrey;
 	min-height: 100px;
 }
 
-#place_for_interpretation {
+/*#place_for_interpretation {
 	padding: 10px;
-}
+}*/
 
-.interpret_title {
+.module_title {
 	padding: 5px;
 	background-color: lightgrey;
 	font-size: 32px;
 	font-weight: bold;
+}
+.module_title + div {
+	padding: 10px;
 }
 
 .wrapper {
@@ -76,9 +79,18 @@ textarea {
 	.input {
 		flex: 1 0 0;
 	}
-	.interpret {
+	.module {
 		flex: 1 0 0;
 	}
+}
+
+.red {
+	color: darkred;
+	font-size: 32px;
+}
+.green {
+	color: darkgreen;
+	font-size: 32px;
 }
 
 .neutral {
@@ -114,6 +126,7 @@ textarea {
 .tooltip {
 	position: relative;
 	display: inline-block;
+	margin-bottom: 30px;
 	/*border-bottom: 1px dotted black;*/
 }
 

@@ -1,0 +1,80 @@
+<script>
+// var neg_labels = ["label1", "label2"];
+// var neg_backgroundColor = ["#006400", "#006400"];
+// var neg_data = [1, 0];
+
+var neg_labels = {{ tt['neg_labels'] | tojson | safe }};
+var neg_backgroundColor = {{ tt['neg_backgroundColor'] | tojson | safe }};
+var neg_data = {{ tt['neg_data'] | tojson | safe }};
+var pos_labels = {{ tt['pos_labels'] | tojson | safe }};
+var pos_backgroundColor = {{ tt['pos_backgroundColor'] | tojson | safe }};
+var pos_data = {{ tt['pos_data'] | tojson | safe }};
+
+neg_labels = neg_labels.concat(" ")
+neg_backgroundColor = neg_backgroundColor.concat("#8b0000")
+neg_data = neg_data.concat(0)
+pos_labels = pos_labels.concat(" ")
+pos_backgroundColor = pos_backgroundColor.concat("#006400")
+pos_data = pos_data.concat(0)
+
+
+console.log(neg_labels);
+console.log(neg_backgroundColor);
+console.log(neg_data);
+
+new Chart(document.getElementById("negative-bar-chart"), {
+    type: 'horizontalBar',
+    data: {
+      labels: neg_labels,
+      datasets: [
+        {
+          label: "Coefficient",
+          backgroundColor: neg_backgroundColor,
+          data: neg_data
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Negative tokens'
+      },
+
+    }
+});
+new Chart(document.getElementById("positive-bar-chart"), {
+    type: 'horizontalBar',
+    data: {
+      labels: pos_labels,
+      datasets: [
+        {
+          label: "Coefficient",
+          backgroundColor: pos_backgroundColor,
+          data: pos_data
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Positive tokens'
+      },
+
+    }
+});
+</script>
+
+<div class="wrapper">
+  {% for item in neg_labels %}
+    {{ item | safe }}
+  {% endfor %}
+
+  <div class="col">
+    <canvas id="negative-bar-chart" width="50" height="10"></canvas>
+  </div>
+  <div class="col">
+    <canvas id="positive-bar-chart" width="50" height="10"></canvas>
+  </div>
+</div>

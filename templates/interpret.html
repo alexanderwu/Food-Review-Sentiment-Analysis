@@ -1,7 +1,4 @@
-<div>{{ interpretation['pred'] }}</div>
-<div>{{ interpretation['text'] }}</div>
 <h4>Compact View:</h4>
-<p>
 {% for token, score, sentiment in interpretation['compact_interpret'] %}
 	{% if sentiment == "neutral" %}
 	<div class="tooltip">
@@ -14,10 +11,8 @@
 	</div>
 	{% endif %}
 {% endfor %}
-</p>
 
 <h4>Expanded View:</h4>
-<p>
 {% for token, score, sentiment in interpretation['expanded_interpret'] %}
 	{% if sentiment == "neutral" %}
 	<div class="tooltip">
@@ -30,4 +25,3 @@
 	</div>
 	{% endif %}
 {% endfor %}
-</p>

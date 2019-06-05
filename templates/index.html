@@ -22,21 +22,59 @@
 		<div class="input">
 			<textarea id="text_input" placeholder="Interpret text" autofocus></textarea>
 		</div>
-		<div class="interpret">
-			<div class="interpret_title">Interpretation</div>
-			<div id="place_for_interpretation"></div>
+		<div class="module">
+			<div class="module_title">Prediction</div>
+			<div id="place_for_prediction"></div>
 		</div>
 	</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<div class="wrapper">
+		<div class="module">
+			<div class="module_title">Interpretation</div>
+			<div id="place_for_interpretation"></div>
+		</div>
+		<div class="module">
+			<div class="module_title">Top 10 tokens</div>
+			<div id="place_for_topk"></div>
+		</div>
+	</div>
+
+	<!-- Load scripts locally instead of online -->
+	<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='Chart.min.js') }}"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
+
 	<script>
 	function interpret_text(model, text) {
+		$.ajax({
+			url: "/predict",
+			type: "GET",
+			data: {model: model, text: text},
+			success: function(response) {
+				$("#place_for_prediction").html(response);
+			},
+			error: function(xhr) {
+				//Do Something to handle error
+			}
+		});
 		$.ajax({
 			url: "/interpret",
 			type: "GET",
 			data: {model: model, text: text},
 			success: function(response) {
 				$("#place_for_interpretation").html(response);
+			},
+			error: function(xhr) {
+				//Do Something to handle error
+			}
+		});
+		$.ajax({
+			url: "/topk",
+			type: "GET",
+			data: {model: model, text: text},
+			success: function(response) {
+				$("#place_for_topk").html(response);
 			},
 			error: function(xhr) {
 				//Do Something to handle error
