@@ -1,7 +1,7 @@
 #!/bin/python
 import tarfile
 
-from nltk import word_tokenize
+from nltk import word_tokenize, TweetTokenizer
 from sklearn import preprocessing
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -140,7 +140,8 @@ class SarcasmClassifier(Classifier):
         self.vect, self.clf = self.supervised_classifier(full_data, y_full)
 
     def supervised_classifier(self, train_data, y_train):
-        vect = CountVectorizer(ngram_range=(1,2), tokenizer=word_tokenize, max_df=1.0, min_df=2) #, stop_words="English")
+        # tknz = TweetTokenizer()
+        vect = CountVectorizer(ngram_range=(1,2), tokenizer=TweetTokenizer().tokenize, max_df=1.0, min_df=2, stop_words="english")
         X_train = vect.fit_transform(train_data)
         clf = LogisticRegression(random_state=0, solver='lbfgs', max_iter=10000)
         clf.fit(X_train, y_train)
