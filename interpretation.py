@@ -77,7 +77,7 @@ class Interpretation(object):
             str_score = self.format_score(self.score(token))
             sentiment = self.classify_token(token)
             if " " in token:  # token is a bigram
-                decorated_token = ("↔", str_score, sentiment)
+                decorated_token = ("/{}/".format(token.replace(" ","_")), str_score, sentiment)
             else:
                 decorated_token = (token, str_score, sentiment)
             return decorated_token

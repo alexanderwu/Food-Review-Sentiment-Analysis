@@ -1,5 +1,6 @@
 body {
-	font: 24px Arial, Helvetica, sans-serif;
+	/*font: 24px Arial, Helvetica, sans-serif;*/
+	font: 24px "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	background-color: #f4f3f3;
 	color: #333333;
 	margin: 30px;
@@ -48,6 +49,10 @@ textarea {
 	min-height: 100px;
 }
 
+#place_for_interpretation {
+	padding: 10px;
+}
+
 .interpret_title {
 	padding: 5px;
 	background-color: lightgrey;
@@ -79,15 +84,29 @@ textarea {
 .neutral {
 	color: grey;
 }
-
 .positive {
 	/*font-size: 32px;*/
+	padding: 10px;
 	color: darkgreen;
+	background-color: rgba(0,255,0,.4);
+	border: 1px solid lightgrey;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
-
 .negative {
 	/*font-size: 32px;*/
+	padding: 10px;
 	color: darkred;
+	border: 1px solid lightgrey;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background-color: rgba(255,0,0,.4);
+}
+.box:hover {
+	padding: 10px;
+	box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
 /* Source: https://www.w3schools.com/css/tryit.asp?filename=trycss_tooltip_arrow_bottom */
@@ -109,7 +128,7 @@ textarea {
 	padding: 5px 0;
 	position: absolute;
 	z-index: 1;
-	bottom: 100%;
+	bottom: 150%;
 	left: 50%;
 	/*margin-left: -50%;*/
 	margin-left: -40px;
