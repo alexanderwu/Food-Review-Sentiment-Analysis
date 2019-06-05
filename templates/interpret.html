@@ -47,17 +47,16 @@
 </script> -->
 
 <script>
-new Chart(document.getElementById("bar-chart"), {
+new Chart(document.getElementById("bar-chart1"), {
     type: 'horizontalBar',
     data: {
       labels: ["Africa", "Asia", "Europe", "Latin America", "North America",
-	  			"Apples", "Candy", "Caramel", "EDM", "happy"],
+	  			"Apples", "Candy"],
       datasets: [
         {
           label: "Population (millions)",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850",
-		  "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [45, 19, -52, 11, 84, 13, -60, 33, 40, -26]
+          backgroundColor: ["#00ee00", "#00ee00", "#00ee00", "#00ee00", "#00ee00", "#00ee00", "#00ee00"],
+          data: [45, 19,  11, 84, 13, 33, 40]
         }
       ]
     },
@@ -71,9 +70,33 @@ new Chart(document.getElementById("bar-chart"), {
     }
 });</script>
 
+<script>
+		new Chart(document.getElementById("bar-chart2"), {
+				type: 'horizontalBar',
+				data: {
+					labels: ["Africa", "Asia", "Europe"],
+					datasets: [
+						{
+							label: "Population (millions)",
+							backgroundColor: ["#ef0000", "#ef0000", "#ef0000"],
+							data: [-52,-60, -26]
+						}
+					]
+				},
+				options: {
+					legend: { display: false },
+					title: {
+						display: true,
+						text: 'Top 10 Absolute K-Values'
+					},
+				
+				}
+		});</script>
+
 <div class="interpret">
 	<!-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> -->
-	<canvas id="bar-chart" width="800" height="450"></canvas>
 	<div>{{ interpretation['text'] }}</div>
 	<div>{{ interpretation['wt_text'] }}</div>
+	<canvas id="bar-chart1" width="200" height="100"></canvas>
+	<canvas id="bar-chart2" width="200" height="100"></canvas>
 </div>
