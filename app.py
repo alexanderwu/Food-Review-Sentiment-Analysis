@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, request
 from prediction import Prediction
 from interpretation import Interpretation
 from toptokens import TopTokens

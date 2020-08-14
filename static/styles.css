@@ -1,8 +1,7 @@
 body {
-	/*font: 24px Arial, Helvetica, sans-serif;*/
-	font: 24px "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-	background-color: #f4f3f3;
-	color: #333333;
+	font: 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	background-color: #eee;
+	color: #333;
 	margin: 30px;
 }
 
@@ -30,7 +29,7 @@ textarea {
 /* Change the color of links on mouse-over */
 .model-nav li:hover {
 	border-bottom: 2px solid lightgrey;
-	color: #333333;
+	color: #333;
 	transition: 0.2s;
 }
 
@@ -40,23 +39,14 @@ textarea {
 	color: dodgerblue;
 }
 
-.input {
-	/*background-color: lightgrey;*/
-}
-
 .module {
 	border: 1px solid lightgrey;
 	min-height: 100px;
 }
 
-/*#place_for_interpretation {
-	padding: 10px;
-}*/
-
 .module_title {
 	padding: 5px;
 	background-color: lightgrey;
-	font-size: 32px;
 	font-weight: bold;
 }
 .module_title + div {
@@ -65,7 +55,7 @@ textarea {
 
 .wrapper {
 	display: flex;
-	flex-flow: row wrap;
+	flex-wrap: wrap;
 }
 
 /* We tell all items to be 100% width, via flex-basis */
@@ -86,18 +76,15 @@ textarea {
 
 .red {
 	color: darkred;
-	font-size: 32px;
 }
 .green {
 	color: darkgreen;
-	font-size: 32px;
 }
 
 .neutral {
 	color: grey;
 }
 .positive {
-	/*font-size: 32px;*/
 	padding: 10px;
 	color: darkgreen;
 	background-color: rgba(0,255,0,.4);
@@ -107,7 +94,6 @@ textarea {
 	border-radius: 10px;
 }
 .negative {
-	/*font-size: 32px;*/
 	padding: 10px;
 	color: darkred;
 	border: 1px solid lightgrey;
@@ -127,7 +113,6 @@ textarea {
 	position: relative;
 	display: inline-block;
 	margin-bottom: 30px;
-	/*border-bottom: 1px dotted black;*/
 }
 
 .tooltip .tooltiptext {
@@ -135,7 +120,6 @@ textarea {
 	width: 80px;
 	background-color: white;
 	border: 1px solid black;
-	/*color: #fff;*/
 	text-align: center;
 	border-radius: 6px;
 	padding: 5px 0;
@@ -143,7 +127,6 @@ textarea {
 	z-index: 1;
 	bottom: 150%;
 	left: 50%;
-	/*margin-left: -50%;*/
 	margin-left: -40px;
 }
 

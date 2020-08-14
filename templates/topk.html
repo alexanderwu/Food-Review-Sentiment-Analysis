@@ -71,10 +71,8 @@ new Chart(document.getElementById("positive-bar-chart"), {
     {{ item | safe }}
   {% endfor %}
 
-  <div class="col">
-    <canvas id="negative-bar-chart" width="200" height="100"></canvas>
-  </div>
-  <div class="col">
-    <canvas id="positive-bar-chart" width="200" height="100"></canvas>
+  <div class="row">
+    <canvas id="negative-bar-chart"></canvas>
+    <canvas id="positive-bar-chart"></canvas>
   </div>
 </div>
