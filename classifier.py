@@ -1,11 +1,11 @@
-#!/bin/python
 import tarfile
 
-from nltk import word_tokenize, TweetTokenizer
+import numpy as np
+from nltk import TweetTokenizer, word_tokenize
 from sklearn import preprocessing
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
-import numpy as np
+
 
 class Classifier(object):
     """
@@ -40,7 +40,8 @@ class SentimentClassifier(Classifier):
         Input: A training test file
         '''
 
-        class Data: pass
+        class Data:
+            pass
         sentiment = Data()
         tweet_train_label = []
         tweet_train_data = []
@@ -51,7 +52,7 @@ class SentimentClassifier(Classifier):
             next(f)
             for line in f:
                 values = line.split()
-                index, label, tweet = values[0], values[1], ' '.join(values[2:])
+                _index, label, tweet = values[0], values[1], ' '.join(values[2:])
                 tweet_train_label.append(label)
                 tweet_train_data.append(tweet)
 
@@ -103,7 +104,8 @@ class SentimentClassifier(Classifier):
             elif 'dev.tsv' in member.name:
                 devname = member.name
 
-        class Data: pass
+        class Data:
+            pass
         sentiment = Data()
 
         sentiment.train_data, sentiment.train_labels = read_tsv(tar, trainname)
@@ -151,7 +153,8 @@ class SarcasmClassifier(Classifier):
         '''
         Input: A training test file
         '''
-        class Data: pass
+        class Data:
+            pass
         sentiment = Data()
         tweet_train_label = []
         tweet_train_data = []
@@ -162,7 +165,7 @@ class SarcasmClassifier(Classifier):
             next(f)
             for line in f:
                 values = line.split()
-                index, label, tweet = values[0], values[1], ' '.join(values[2:])
+                _index, label, tweet = values[0], values[1], ' '.join(values[2:])
                 tweet_train_label.append(label)
                 tweet_train_data.append(tweet)
 

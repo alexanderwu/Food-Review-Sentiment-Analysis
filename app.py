@@ -1,11 +1,8 @@
-import json
-
+from classifier import SarcasmClassifier, SentimentClassifier
 from flask import Flask, render_template, request
-from prediction import Prediction
 from interpretation import Interpretation
+from prediction import Prediction
 from toptokens import TopTokens
-from classifier import SentimentClassifier, SarcasmClassifier
-
 
 app = Flask(__name__)
 sentiment_clf = SentimentClassifier()

@@ -18,7 +18,7 @@ class TopTokens(object):
 
 def top_k(clf, review=None, k=10, type='Top', verbose=False):
     """Return top-k predictive features"""
-    clf_feature_names = clf.vect.get_feature_names()
+    clf_feature_names = clf.vect.get_feature_names_out()
     clf_coefs = clf.clf.coef_[0]
 
     if review is not None:

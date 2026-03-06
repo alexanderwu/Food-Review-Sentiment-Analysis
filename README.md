@@ -6,7 +6,7 @@ Interpret text classification model
 
 ## Getting Started
 
-_Prerequisite: Install pandas, scikitlearn, numpy, and flask_
+_Prerequisite: Install pandas, scikit-learn, numpy, and flask_
 
 Run Flask app
 

@@ -3,7 +3,7 @@ class Prediction(object):
     Outputs prediction and text.
     """
     def __init__(self, clf, model="", text=""):
-        clf_pred = float(clf.predict_sentiment(text))
+        clf_pred = float(clf.predict_sentiment(text)[0])
         self.neg_pred = format_prediction(1 - clf_pred)
         self.pos_pred = format_prediction(clf_pred)
         if model == "sentiment":

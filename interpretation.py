@@ -1,14 +1,14 @@
-import itertools
 from collections import defaultdict
 
-from nltk import word_tokenize, TweetTokenizer
+from nltk import TweetTokenizer, word_tokenize
+
 
 class Interpretation(object):
     """
     Interpretation of text. Handles visualizations.
     """
     def __init__(self, clf, model, text=""):
-        clf_feature_names = clf.vect.get_feature_names()
+        clf_feature_names = clf.vect.get_feature_names_out()
         clf_coefs = clf.clf.coef_[0]
         self.vocab_dict = defaultdict(float, zip(clf_feature_names, clf_coefs))
         # self.pred = clf.predict_sentiment(text)
